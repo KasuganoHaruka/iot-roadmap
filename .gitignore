@@ -1,0 +1,19 @@
+# Build output
+bin/
+obj/
+
+# Editors
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Runtime artifacts of the edge gateway's local buffer
+*.db
+*.db-shm
+*.db-wal
+
+# Pre-.NET-10 copies of the project files. Superseded by this repository's
+# history — the .NET 8 state is the initial commit — kept only until the
+# upgrade has been exercised on real hardware.
+.backup-net8/

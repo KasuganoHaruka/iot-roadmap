@@ -1,0 +1,11 @@
+# udev 规则:按 USB 转 485 模块的序列号固定设备名。
+# 放到 /etc/udev/rules.d/,然后 sudo udevadm control --reload-rules && sudo udevadm trigger
+#
+# 为什么必须做这个:插两个 USB 转 485,重启后 /dev/ttyUSB0 和 ttyUSB1 可能对调,
+# 于是 bus-1 的配置连到了 bus-2 的设备上。现场排查这个问题会浪费一整天。
+#
+# 先用 udevadm info -a -n /dev/ttyUSB0 | grep -E 'idVendor|idProduct|serial'
+# 查出你的模块的 VID/PID/序列号,替换下面的值。
+
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", ATTRS{serial}=="A50285BI", SYMLINK+="ttyModbus0", MODE="0660", GROUP="dialout"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", ATTRS{serial}=="A50285BJ", SYMLINK+="ttyModbus1", MODE="0660", GROUP="dialout"

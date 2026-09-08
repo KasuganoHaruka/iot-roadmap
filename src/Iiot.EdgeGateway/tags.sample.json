@@ -1,0 +1,54 @@
+{
+  "_comment": [
+    "点表示例。加设备只改这个文件,不改代码 —— 这是现场交付效率的关键。",
+    "address 里的偏移是【协议地址,0-based】。",
+    "文档若写 40001,这里填 0;文档写 40100,这里填 99。",
+    "wordOrder 现场逐个仪表确认:让设备输出已知值,四种排列算一遍对上哪个用哪个。"
+  ],
+  "buses": [
+    {
+      "name": "bus-1",
+      "transport": "rtu",
+      "port": "/dev/ttyModbus0",
+      "baudRate": 9600,
+      "parity": "None",
+      "dataBits": 8,
+      "stopBits": 1,
+      "devices": [
+        {
+          "deviceId": "temp-01",
+          "line": "line-a",
+          "unitId": 1,
+          "pollIntervalMs": 1000,
+          "timeoutMs": 300,
+          "tags": [
+            { "name": "Temperature", "address": "4x:0", "dataType": "Float32", "wordOrder": "CDAB", "unit": "degC" },
+            { "name": "Humidity",    "address": "4x:2", "dataType": "Float32", "wordOrder": "CDAB", "unit": "%RH" }
+          ]
+        },
+        {
+          "deviceId": "temp-02",
+          "line": "line-a",
+          "unitId": 2,
+          "pollIntervalMs": 1000,
+          "timeoutMs": 300,
+          "tags": [
+            { "name": "Temperature", "address": "4x:0", "dataType": "Float32", "wordOrder": "CDAB", "unit": "degC" }
+          ]
+        },
+        {
+          "deviceId": "meter-01",
+          "line": "line-a",
+          "unitId": 3,
+          "pollIntervalMs": 5000,
+          "timeoutMs": 1000,
+          "_comment": "老电表响应慢,超时单独放宽到 1 秒,周期放到 5 秒",
+          "tags": [
+            { "name": "ActivePower",  "address": "3x:16", "dataType": "Float32", "wordOrder": "ABCD", "scale": 0.1, "unit": "kW" },
+            { "name": "TotalEnergy",  "address": "3x:32", "dataType": "UInt32",  "wordOrder": "ABCD", "scale": 0.01, "unit": "kWh" }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+# systemd 服务单元。放到树莓派的 /etc/systemd/system/ 下:
+#   sudo cp iiot-edge-gateway.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now iiot-edge-gateway
+#   journalctl -u iiot-edge-gateway -f
+#
+# W5 任务。要点是 Restart=always —— 崩了自己起来,
+# 这是"7×24 无人值守"的第一道保险。
+
+[Unit]
+Description=IIoT Edge Gateway
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+WorkingDirectory=/opt/iiot-gateway
+ExecStart=/opt/iiot-gateway/Iiot.EdgeGateway
+Restart=always
+RestartSec=5
+# 串口访问需要 dialout 组;不要图省事直接用 root 跑
+User=iiot
+Group=dialout
+Environment=DOTNET_ENVIRONMENT=Production
+# 崩溃日志进 journald,配合 Serilog 的文件日志双保险
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=iiot-gateway
+
+# 资源上限:内存失控时由 systemd 杀掉重启,而不是把整台树莓派拖死
+MemoryMax=512M
+
+[Install]
+WantedBy=multi-user.target

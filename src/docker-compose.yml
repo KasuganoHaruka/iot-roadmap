@@ -1,0 +1,73 @@
+# 平台侧全栈:一条命令起 MQTT Broker + 时序库 + 可视化。
+#   docker compose up -d
+#
+# 端口:
+#   EMQX      1883 (MQTT) / 8083 (WS) / 18083 (Dashboard, admin/public)
+#   TDengine  6030 (原生) / 6041 (REST)
+#   Grafana   3000 (admin/admin)
+#
+# 树莓派上跑边缘网关,这套跑在你的开发机或一台小主机上,
+# 就是一个完整的"边缘 + 平台"链路。
+
+services:
+  emqx:
+    image: emqx/emqx:5.8
+    container_name: iiot-emqx
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "8083:8083"
+      - "18083:18083"
+    environment:
+      EMQX_NODE__NAME: emqx@127.0.0.1
+      # 生产环境务必关掉匿名接入并配置认证。这里为了学习方便才开着。
+      EMQX_AUTHENTICATION__1__MECHANISM: password_based
+    volumes:
+      - emqx-data:/opt/emqx/data
+      - emqx-log:/opt/emqx/log
+    healthcheck:
+      test: ["CMD", "/opt/emqx/bin/emqx", "ctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  tdengine:
+    image: tdengine/tdengine:3.3.2.0
+    container_name: iiot-tdengine
+    restart: unless-stopped
+    ports:
+      - "6030:6030"
+      - "6041:6041"
+    environment:
+      TAOS_FQDN: tdengine
+    volumes:
+      - tdengine-data:/var/lib/taos
+      - tdengine-log:/var/log/taos
+    healthcheck:
+      test: ["CMD", "taos", "-s", "show databases;"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  grafana:
+    image: grafana/grafana:11.2.0
+    container_name: iiot-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      # TDengine 数据源插件
+      GF_INSTALL_PLUGINS: tdengine-datasource
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      tdengine:
+        condition: service_healthy
+
+volumes:
+  emqx-data:
+  emqx-log:
+  tdengine-data:
+  tdengine-log:
+  grafana-data:

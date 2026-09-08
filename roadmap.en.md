@@ -44,7 +44,7 @@ Six months is only enough to go from "can use it" to "can own it" in **one** dir
 **Edge layer**
 - Linux: systemd services, udev rules to pin serial device names, `ip` / `ss` / `tcpdump` troubleshooting
 - Docker / docker compose
-- .NET 8: Worker Service, `linux-arm64` publishing, `System.Threading.Channels`, Polly, Serilog
+- .NET 10: Worker Service, `linux-arm64` publishing, `System.Threading.Channels`, Polly, Serilog
 - SQLite local buffering → store-and-forward across network outages
 
 **Platform layer**
@@ -98,7 +98,7 @@ C firmware, RTOS, PCB design, LoRa/NB-IoT physical layer, deep Kubernetes, the J
 
 | Week | Content |
 |---|---|
-| **W5** | Install Ubuntu Server on the Raspberry Pi. Publish .NET 8 as a single-file `linux-arm64` binary running as a systemd service (start on boot, restart on crash). udev rules pinning USB serial adapters by serial number (`/dev/ttyModbus0`). Troubleshoot with `ip a`, `ss -tunlp`, `tcpdump -i eth0 port 502`. |
+| **W5** | Install Ubuntu Server on the Raspberry Pi. Publish .NET 10 as a single-file `linux-arm64` binary running as a systemd service (start on boot, restart on crash). udev rules pinning USB serial adapters by serial number (`/dev/ttyModbus0`). Troubleshoot with `ip a`, `ss -tunlp`, `tcpdump -i eth0 port 502`. |
 | **W6** | MQTT fundamentals: QoS 0/1/2 semantics and their costs, retained messages, LWT (last will for offline detection), clean session / session expiry, shared subscriptions (`$share/group/topic`). Deploy EMQX via Docker. MQTTnet client. **Topic design conventions** (`iiot/{site}/{line}/{device}/telemetry`). |
 | **W7** | Turn the M1 drivers into an edge service: acquire → buffer in SQLite → publish over MQTT → **automatic store-and-forward after an outage** → purge on ACK. Backpressure and a memory ceiling (bounded `Channel` plus a drop policy). |
 | **W8** | Harden it: Polly retry and circuit breaking, a health endpoint, graceful shutdown (`IHostApplicationLifetime`), hot configuration reload (`IOptionsMonitor`), rolling structured logs with Serilog, remote configuration pushed over MQTT. |
@@ -154,7 +154,7 @@ C firmware, RTOS, PCB design, LoRa/NB-IoT physical layer, deep Kubernetes, the J
 Field devices (Modbus RTU/TCP · Siemens S7 · OPC UA)
    │  IDeviceDriver abstraction + tag-list configuration (Excel / JSON import)
    ▼
-Edge gateway (Raspberry Pi · .NET 8)
+Edge gateway (Raspberry Pi · .NET 10)
    polling scheduler → SQLite buffer → store-and-forward → link-quality stats
    │  MQTT (EMQX) + thing-model JSON
    ▼

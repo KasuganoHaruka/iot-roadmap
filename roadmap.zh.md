@@ -44,7 +44,7 @@
 **边缘层**
 - Linux:systemd 服务、udev 固定串口名、`ip` / `ss` / `tcpdump` 排障
 - Docker / docker compose
-- .NET 8:Worker Service、`linux-arm64` 发布、`System.Threading.Channels`、Polly、Serilog
+- .NET 10:Worker Service、`linux-arm64` 发布、`System.Threading.Channels`、Polly、Serilog
 - SQLite 本地缓冲 → 断网续传
 
 **平台层**
@@ -98,7 +98,7 @@ C 语言固件、RTOS、PCB 设计、LoRa/NB-IoT 物理层、Kubernetes 深水�
 
 | 周 | 内容 |
 |---|---|
-| **W5** | 树莓派装 Ubuntu Server。.NET 8 发布为 `linux-arm64` 单文件 + systemd 服务(开机自启、崩溃重启)。udev 规则按 USB 串口序列号固定设备名(`/dev/ttyModbus0`)。`ip a` / `ss -tunlp` / `tcpdump -i eth0 port 502` 排障。 |
+| **W5** | 树莓派装 Ubuntu Server。.NET 10 发布为 `linux-arm64` 单文件 + systemd 服务(开机自启、崩溃重启)。udev 规则按 USB 串口序列号固定设备名(`/dev/ttyModbus0`)。`ip a` / `ss -tunlp` / `tcpdump -i eth0 port 502` 排障。 |
 | **W6** | MQTT 原理:QoS 0/1/2 的语义与代价、Retain、LWT(遗嘱做设备离线检测)、Clean Session / Session Expiry、共享订阅(`$share/group/topic`)。Docker 部署 EMQX。MQTTnet 客户端。**主题设计规范**(`iiot/{site}/{line}/{device}/telemetry`)。 |
 | **W7** | 把 M1 驱动做成边缘服务:采集 → SQLite 本地缓冲 → MQTT 上报 → **断网自动续传** → 收到 ACK 后清理。背压控制与内存上限(`Channel` 有界队列 + 丢弃策略)。 |
 | **W8** | 可靠性打磨:Polly 重试与熔断、健康检查端点、优雅退出(`IHostApplicationLifetime`)、配置热加载(`IOptionsMonitor`)、Serilog 结构化日志滚动、通过 MQTT 下发远程配置。 |
@@ -154,7 +154,7 @@ C 语言固件、RTOS、PCB 设计、LoRa/NB-IoT 物理层、Kubernetes 深水�
 现场设备 (Modbus RTU/TCP · 西门子 S7 · OPC UA)
    │  统一驱动抽象 IDeviceDriver + 点表配置(Excel / JSON 导入)
    ▼
-边缘网关 (树莓派 · .NET 8)
+边缘网关 (树莓派 · .NET 10)
    采集调度 → SQLite 缓冲 → 断网续传 → 通信质量统计
    │  MQTT (EMQX) + 物模型 JSON
    ▼

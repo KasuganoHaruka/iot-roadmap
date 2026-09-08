@@ -44,7 +44,7 @@
 **エッジ層**
 - Linux:systemd サービス、udev ルールによるシリアルデバイス名の固定、`ip` / `ss` / `tcpdump` による切り分け
 - Docker / docker compose
-- .NET 8:Worker Service、`linux-arm64` 向け発行、`System.Threading.Channels`、Polly、Serilog
+- .NET 10:Worker Service、`linux-arm64` 向け発行、`System.Threading.Channels`、Polly、Serilog
 - SQLite によるローカルバッファ → 通信断からの再送
 
 **プラットフォーム層**
@@ -98,7 +98,7 @@ C 言語のファームウェア、RTOS、基板設計、LoRa/NB-IoT の物理�
 
 | 週 | 内容 |
 |---|---|
-| **W5** | Raspberry Pi に Ubuntu Server を導入。.NET 8 を `linux-arm64` の単一ファイルとして発行し、systemd サービス化(起動時自動実行、クラッシュ時再起動)。udev ルールで USB シリアル変換器をシリアル番号により固定(`/dev/ttyModbus0`)。`ip a`、`ss -tunlp`、`tcpdump -i eth0 port 502` による切り分け。 |
+| **W5** | Raspberry Pi に Ubuntu Server を導入。.NET 10 を `linux-arm64` の単一ファイルとして発行し、systemd サービス化(起動時自動実行、クラッシュ時再起動)。udev ルールで USB シリアル変換器をシリアル番号により固定(`/dev/ttyModbus0`)。`ip a`、`ss -tunlp`、`tcpdump -i eth0 port 502` による切り分け。 |
 | **W6** | MQTT の原理:QoS 0/1/2 の意味とコスト、Retain、LWT(遺言メッセージによるオフライン検知)、Clean Session / Session Expiry、共有サブスクリプション(`$share/group/topic`)。Docker で EMQX を構築。MQTTnet クライアント。**トピック設計の規約**(`iiot/{site}/{line}/{device}/telemetry`)。 |
 | **W7** | M1 のドライバーをエッジサービス化:収集 → SQLite にバッファ → MQTT で送信 → **通信断からの自動再送** → ACK 受領後に削除。バックプレッシャーとメモリ上限(有界 `Channel` と破棄ポリシー)。 |
 | **W8** | 堅牢化:Polly によるリトライとサーキットブレーカー、ヘルスチェック、グレースフルシャットダウン(`IHostApplicationLifetime`)、設定のホットリロード(`IOptionsMonitor`)、Serilog による構造化ログのローテーション、MQTT 経由のリモート設定配信。 |
@@ -154,7 +154,7 @@ C 言語のファームウェア、RTOS、基板設計、LoRa/NB-IoT の物理�
 現場機器 (Modbus RTU/TCP · Siemens S7 · OPC UA)
    │  統一ドライバー抽象 IDeviceDriver + 点数表設定(Excel / JSON 取り込み)
    ▼
-エッジゲートウェイ (Raspberry Pi · .NET 8)
+エッジゲートウェイ (Raspberry Pi · .NET 10)
    収集スケジューラ → SQLite バッファ → 通信断からの再送 → 通信品質統計
    │  MQTT (EMQX) + モノのモデル JSON
    ▼

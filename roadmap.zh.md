@@ -200,10 +200,38 @@ C 语言固件、RTOS、PCB 设计、LoRa/NB-IoT 物理层、Kubernetes 深水�
 ## 3. 学习资源
 
 **规范与文档**(第一手,优先级最高)
-- Modbus 官方规范:`Modbus_Application_Protocol_V1_1b3.pdf` + `Modbus_over_serial_line_V1_02.pdf`(modbus.org 免费下载)
-- OPC Foundation `UA-.NETStandard` GitHub 仓库的 `Samples/` 目录
-- MQTTnet Wiki、EMQX 中文文档、TDengine 官方文档(中文质量高)
-- HiveMQ 的 *MQTT Essentials* 系列博客(英文,讲 QoS 最清楚)
+
+| 资源 | 链接 |
+|---|---|
+| Modbus 应用协议规范(PDF,免注册直接下) | <https://www.modbus.org/file/secure/modbusprotocolspecification.pdf> |
+| Modbus 串行链路规范(PDF) | <https://www.modbus.org/file/secure/modbusoverserial.pdf> |
+| Modbus 规范索引页 | <https://www.modbus.org/modbus-specifications> |
+| OPC Foundation `UA-.NETStandard`(看 `Samples/`) | <https://github.com/OPCFoundation/UA-.NETStandard> |
+| MQTTnet | <https://github.com/dotnet/MQTTnet> |
+| EMQX 中文文档 | <https://docs.emqx.com/zh/emqx/latest/> |
+| TDengine 官方文档(中文质量高) | <https://docs.taosdata.com/> |
+| HiveMQ *MQTT Essentials*(英文,讲 QoS 最清楚) | <https://www.hivemq.com/mqtt-essentials/> |
+| Snap7(不用真机练 S7 协议) | <https://snap7.sourceforge.net/> |
+| ThingsBoard 文档 | <https://thingsboard.io/docs/> |
+| Grafana 文档 | <https://grafana.com/docs/> |
+| Polly / Serilog | <https://github.com/App-vNext/Polly> · <https://serilog.net/> |
+
+**工具**
+
+| 工具 | 用途 | 链接 |
+|---|---|---|
+| Wireshark | 抓 Modbus TCP / MQTT 报文 | <https://www.wireshark.org/download.html> |
+| diagslave | 免费 Modbus 从站模拟器,命令行 | <https://www.modbusdriver.com/diagslave.html> |
+| Modbus Poll / Slave | Windows 图形界面,业界最常用(试用) | <https://www.modbustools.com/> |
+| pymodbus | 可脚本化,方便造异常响应等边界情况 | <https://github.com/pymodbus-dev/pymodbus> |
+| crccalc | CRC-16/MODBUS 在线对答案 | <https://crccalc.com/> |
+| UaExpert | OPC UA 通用客户端,M3 必备 | <https://www.unified-automation.com/products/development-tools/uaexpert.html> |
+| Prosys OPC UA Browser | UaExpert 的免费替代,同样能浏览地址空间 | <https://www.prosysopc.com/products/opc-ua-browser/> |
+| UA-.NETStandard-Samples | 官方参考客户端/服务端示例代码 | <https://github.com/OPCFoundation/UA-.NETStandard-Samples> |
+| docker compose | 一键起 EMQX + TDengine + Grafana | <https://docs.docker.com/compose/> |
+
+> 上表链接均已实测可达,只有 **Snap7**(SourceForge)和 **UaExpert**(Unified Automation)
+> 两处对自动检查返回 403 —— 那是站点的反爬策略,浏览器正常打开。
 
 **书**
 - 《OPC 统一架构》(Mahnke / Leitner / Damm)— OPC UA 权威,啃前四章即可

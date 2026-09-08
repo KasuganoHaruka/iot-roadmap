@@ -200,10 +200,40 @@ Ingestion service (.NET) → TDengine
 ## 3. Resources
 
 **Specifications and documentation** (first-hand sources, highest priority)
-- Modbus specs: `Modbus_Application_Protocol_V1_1b3.pdf` and `Modbus_over_serial_line_V1_02.pdf` (free from modbus.org)
-- The `Samples/` directory of OPC Foundation's `UA-.NETStandard` on GitHub
-- MQTTnet wiki, EMQX documentation, TDengine documentation
-- HiveMQ's *MQTT Essentials* blog series — the clearest explanation of QoS anywhere
+
+| Resource | Link |
+|---|---|
+| Modbus Application Protocol spec (PDF, no sign-up) | <https://www.modbus.org/file/secure/modbusprotocolspecification.pdf> |
+| Modbus over Serial Line spec (PDF) | <https://www.modbus.org/file/secure/modbusoverserial.pdf> |
+| Modbus specification index | <https://www.modbus.org/modbus-specifications> |
+| OPC Foundation `UA-.NETStandard` (see `Samples/`) | <https://github.com/OPCFoundation/UA-.NETStandard> |
+| MQTTnet | <https://github.com/dotnet/MQTTnet> |
+| EMQX documentation | <https://docs.emqx.com/zh/emqx/latest/> |
+| TDengine documentation | <https://docs.taosdata.com/> |
+| HiveMQ *MQTT Essentials* — the clearest QoS explanation anywhere | <https://www.hivemq.com/mqtt-essentials/> |
+| Snap7 — practise S7comm without real hardware | <https://snap7.sourceforge.net/> |
+| ThingsBoard documentation | <https://thingsboard.io/docs/> |
+| Grafana documentation | <https://grafana.com/docs/> |
+| Polly / Serilog | <https://github.com/App-vNext/Polly> · <https://serilog.net/> |
+
+**Tools**
+
+| Tool | For | Link |
+|---|---|---|
+| Wireshark | Capturing Modbus TCP and MQTT | <https://www.wireshark.org/download.html> |
+| diagslave | Free command-line Modbus slave simulator | <https://www.modbusdriver.com/diagslave.html> |
+| Modbus Poll / Slave | The Windows GUI everyone in the field uses (trial) | <https://www.modbustools.com/> |
+| pymodbus | Scriptable — easy to provoke exception responses | <https://github.com/pymodbus-dev/pymodbus> |
+| crccalc | Check your CRC-16/MODBUS against a reference | <https://crccalc.com/> |
+| UaExpert | The generic OPC UA client; required for M3 | <https://www.unified-automation.com/products/development-tools/uaexpert.html> |
+| Prosys OPC UA Browser | A free alternative to UaExpert for browsing an address space | <https://www.prosysopc.com/products/opc-ua-browser/> |
+| UA-.NETStandard-Samples | The official reference client and server code | <https://github.com/OPCFoundation/UA-.NETStandard-Samples> |
+| docker compose | One command for EMQX + TDengine + Grafana | <https://docs.docker.com/compose/> |
+
+> Every link above was checked and resolves. The two exceptions are **Snap7**
+> (SourceForge) and **UaExpert** (Unified Automation), which answer 403 to an
+> automated request — that is their bot protection, not a broken link; both open
+> fine in a browser.
 
 **Books**
 - *OPC Unified Architecture* (Mahnke / Leitner / Damm) — the authoritative OPC UA text; the first four chapters are enough
